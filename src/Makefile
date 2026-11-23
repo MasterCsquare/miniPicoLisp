@@ -7,12 +7,13 @@ bin = ../bin
 picoFiles = main.c gc.c apply.c flow.c sym.c subr.c math.c io.c
 
 CC = gcc
+CFLAGS = -std=gnu17
 
 picolisp: $(bin)/picolisp
 
 .c.o:
 	echo $*.c:
-	$(CC) -c -O2 -pipe \
+	$(CC) $(CFLAGS) -c -O2 -pipe \
 	-falign-functions -fomit-frame-pointer -fno-strict-aliasing \
 	-W -Wimplicit -Wreturn-type -Wunused -Wformat \
 	-Wuninitialized -Wstrict-prototypes \
@@ -30,7 +31,7 @@ sym.d rom.d ram.d: gen3m init.s lib.s pilog.s
 	./gen3m 0 init.s lib.s pilog.s
 
 gen3m: gen3m.c
-	$(CC) -o gen3m gen3m.c
+	$(CC) $(CFLAGS) -o gen3m gen3m.c
 
 # Clean up
 clean:
